@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'ui/pages/home_page.dart';
+import 'ui/pages/register_page.dart';
+import 'ui/pages/login_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,9 +29,16 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSwatch()
               .copyWith(primary: const Color(0xffb41a4e)),
           textTheme: ThemeData.light().textTheme.copyWith(
-            titleMedium: const TextStyle(fontWeight: FontWeight.bold,fontSize: 18)
-          )),
-      home: const HomePage(),
+              titleMedium:
+                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          titleSmall: const TextStyle(fontWeight: FontWeight.bold,fontSize: 14))),
+
+      initialRoute: '/',
+      routes: {
+        '/' : (ctx) => const HomePage(),
+        LoginPage.route: (ctx) => const LoginPage(),
+        RegisterPage.route: (ctx) => const RegisterPage()
+      },
     );
   }
 }
