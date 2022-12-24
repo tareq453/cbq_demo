@@ -48,7 +48,9 @@ class _RegisterFormState extends State<RegisterForm> {
       final registerProvider =
           Provider.of<RegisterProvider>(context, listen: false);
       try {
-        await registerProvider.register(_userDetails!).then((value) =>  Navigator.of(context).pop());
+        await registerProvider
+            .register(_userDetails!)
+            .then((value) => Navigator.of(context).pop());
       } catch (error) {
         print('error');
       }
@@ -70,8 +72,10 @@ class _RegisterFormState extends State<RegisterForm> {
   Widget build(BuildContext context) {
     print('');
     return Card(
+      elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
+        side: BorderSide(color: Colors.grey.shade500)
       ),
       clipBehavior: Clip.antiAliasWithSaveLayer,
       child: Form(
@@ -89,9 +93,10 @@ class _RegisterFormState extends State<RegisterForm> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16),
+              padding: const EdgeInsets.symmetric(vertical: 16,horizontal: 16),
               child: TextFormField(
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
+                    labelStyle: Theme.of(context).textTheme.bodyMedium,
                     border: OutlineInputBorder(),
                     labelText: 'Qatar ID/Passport Number *'),
                 validator: (value) {
@@ -203,10 +208,12 @@ class _MobileNumberInputState extends State<MobileNumberInput> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16),
+      padding: const EdgeInsets.symmetric(vertical: 16,horizontal: 16),
       child: TextFormField(
         enableInteractiveSelection: false,
         decoration: InputDecoration(
+            labelStyle: Theme.of(context).textTheme.bodyLarge,
+            hintStyle:  Theme.of(context).textTheme.bodyMedium,
             hintText: 'Mobile Number *',
             floatingLabelBehavior: FloatingLabelBehavior.always,
             prefixIcon: _prefix(_selectedCountry),
