@@ -1,10 +1,10 @@
 import 'package:cbq/ui/pages/post_detail.dart';
 import 'package:flutter/material.dart';
 
-import '../../models/dashboard_data.dart';
+import '../../../models/dashboard_data.dart';
 
 class DashboardItem extends StatefulWidget {
-  final DashboardData _dashboardData;
+  final DashboardData? _dashboardData;
 
   const DashboardItem(this._dashboardData, {Key? key}) : super(key: key);
 
@@ -46,7 +46,7 @@ class _DashboardItemState extends State<DashboardItem>
         children: [
           ListTile(
             tileColor: Colors.grey.shade100,
-            title: Text(widget._dashboardData.dashboardUser?.username ?? ''),
+            title: Text(widget._dashboardData?.dashboardUser?.username ?? ''),
             trailing: IconButton(
               icon: RotationTransition(
                   turns: _rotationAnimation,
@@ -75,11 +75,11 @@ class _DashboardItemState extends State<DashboardItem>
                       const Divider(height: 1),
                   itemBuilder: (context, index) {
                     final dashboardPost =
-                        widget._dashboardData.dashboardPostList?[0];
+                        widget._dashboardData?.dashboardPostList?[0];
                     return GestureDetector(
                       onTap: () {
                         _navigateToPostDetail(
-                            widget._dashboardData.dashboardUser?.id ?? -1,
+                            widget._dashboardData?.dashboardUser?.id ?? -1,
                             dashboardPost?.postId ?? -1);
                       },
                       child: Padding(
@@ -97,7 +97,7 @@ class _DashboardItemState extends State<DashboardItem>
                     );
                   },
                   itemCount:
-                      widget._dashboardData.dashboardPostList?.length ?? 0,
+                      widget._dashboardData?.dashboardPostList?.length ?? 0,
                 )),
           )
         ],

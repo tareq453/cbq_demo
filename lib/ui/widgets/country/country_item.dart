@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../models/country.dart';
+import '../../../models/country.dart';
 
 class CountryItem extends StatelessWidget {
   final Country _country;

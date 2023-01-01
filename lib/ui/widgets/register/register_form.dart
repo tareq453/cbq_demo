@@ -2,20 +2,15 @@ import 'package:cbq/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../models/country.dart';
-import '../../providers/register_provider.dart';
+import '../../../models/country.dart';
+import '../../../providers/register_provider.dart';
 import 'mobile_number_input.dart';
 
-class RegisterForm extends StatefulWidget {
+class RegisterForm extends StatelessWidget {
   RegisterForm({Key? key}) : super(key: key);
 
-  @override
-  State<RegisterForm> createState() => _RegisterFormState();
-}
-
-class _RegisterFormState extends State<RegisterForm> {
   final GlobalKey<FormState> _formKey = GlobalKey();
-  bool _isLoading = false;
+
   User? _userDetails;
 
   void _updateCountry(Country country) {
@@ -32,19 +27,14 @@ class _RegisterFormState extends State<RegisterForm> {
         country: _userDetails?.country);
   }
 
-  Future<void> _submitForm() async {
-    print("validate ${_formKey.currentState?.validate()}");
+  Future<void> _submitForm(BuildContext context) async {
     if (_formKey.currentState?.validate() == false) {
       // Invalid!
       return;
     }
     _formKey.currentState?.save();
-    setState(() {
-      _isLoading = true;
-    });
     if (_userDetails != null) {
-      final registerProvider =
-          Provider.of<RegisterProvider>(context, listen: false);
+      final registerProvider = context.read<RegisterProvider>();
       try {
         await registerProvider
             .register(_userDetails!)
@@ -61,20 +51,15 @@ class _RegisterFormState extends State<RegisterForm> {
         duration: Duration(seconds: 2),
       ));
     }
-    setState(() {
-      _isLoading = false;
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    print('');
     return Card(
       elevation: 0,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
-        side: BorderSide(color: Colors.grey.shade500)
-      ),
+          borderRadius: BorderRadius.circular(8),
+          side: BorderSide(color: Colors.grey.shade500)),
       clipBehavior: Clip.antiAliasWithSaveLayer,
       child: Form(
         key: _formKey,
@@ -91,11 +76,11 @@ class _RegisterFormState extends State<RegisterForm> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16,horizontal: 16),
+              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
               child: TextFormField(
                 decoration: InputDecoration(
                     labelStyle: Theme.of(context).textTheme.bodyMedium,
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     labelText: 'Qatar ID/Passport Number *'),
                 validator: (value) {
                   if (value?.isEmpty == true) {
@@ -114,17 +99,23 @@ class _RegisterFormState extends State<RegisterForm> {
             MobileNumberInput(_updateCountry, _updateMobileNumber),
             Padding(
               padding: const EdgeInsets.only(bottom: 16),
-              child: _isLoading
-                  ? const CircularProgressIndicator()
-                  : ElevatedButton(
-                      style: ButtonStyle(
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
+              child: Consumer<RegisterProvider>(
+                builder: (ctx, registerProvider, child) {
+                  return registerProvider.isLoading
+                      ? const CircularProgressIndicator()
+                      : ElevatedButton(
+                          style: ButtonStyle(
+                              shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
                                       borderRadius:
                                           BorderRadius.circular(18.0)))),
-                      onPressed: _submitForm,
-                      child: const Text("Submit")),
+                          onPressed: () {
+                            _submitForm(context);
+                          },
+                          child: const Text("Submit"));
+                },
+              ),
             )
           ],
         ),
@@ -132,4 +123,3 @@ class _RegisterFormState extends State<RegisterForm> {
     );
   }
 }
-

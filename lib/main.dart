@@ -1,3 +1,6 @@
+import 'package:cbq/di/getit.dart';
+import 'package:cbq/providers/post_details_provider.dart';
+import 'package:cbq/res/AppContextExtension.dart';
 import 'package:cbq/ui/pages/post_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,6 +19,7 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  setupLocator();
   runApp(const MyApp());
 }
 
@@ -28,36 +32,30 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (ctx) => CountryProvider(),
+          create: (ctx) => getIt<CountryProvider>(),
         ),
         ChangeNotifierProvider(
-          create: (ctx) => RegisterProvider(),
+          create: (ctx) => getIt<RegisterProvider>(),
         ),
         ChangeNotifierProvider(
-          create: (ctx) => DashboardProvider(),
+          create: (ctx) => getIt<DashboardProvider>(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => getIt<PostDetailsProvider>(),
         )
       ],
       child: Consumer<RegisterProvider>(
         builder: (ctx, register, _) {
           return MaterialApp(
-            title: 'Flutter Demo',
+            title: 'CBQ',
             theme: ThemeData(
-                // This is the theme of your application.
-                //
-                // Try running your application with "flutter run". You'll see the
-                // application has a blue toolbar. Then, without quitting the app, try
-                // changing the primarySwatch below to Colors.green and then invoke
-                // "hot reload" (press "r" in the console where you ran "flutter run",
-                // or simply save your changes to "hot reload" in a Flutter IDE).
-                // Notice that the counter didn't reset back to zero; the application
-                // is not restarted.
                 colorScheme: ColorScheme.fromSwatch()
-                    .copyWith(primary: const Color(0xffb41a4e)),
+                    .copyWith(primary: context.resources.color.colorPrimary),
                 textTheme: ThemeData.light().textTheme.copyWith(
-                    titleMedium: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 18),
-                    titleSmall: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 14),
+                    titleMedium: TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: context.resources.dimension.defaultText),
+                    titleSmall: TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: context.resources.dimension.smallText),
                     headlineSmall: const TextStyle(
                       fontWeight: FontWeight.bold,
                     ))),

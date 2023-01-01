@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/country_provider.dart';
-import '../widgets/country_item.dart';
+import '../widgets/country/country_item.dart';
 
 class CountryPickerModal extends StatelessWidget {
   final Function(Country) _selectHandler;
@@ -51,17 +51,4 @@ class CountryPickerModal extends StatelessWidget {
       ),
     );
   }
-
-
-  // const Padding(
-  // padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-  // child: TextField(
-  // decoration: InputDecoration(
-  // isDense: true,
-  // prefixIcon: Icon(Icons.search),
-  // hintText: 'Search Code',
-  // border: OutlineInputBorder(),
-  // labelText: 'Search Code'),
-  // ),
-  // ),
 }

@@ -1,10 +1,12 @@
-import 'package:cbq/exceptions/connectivity_exception.dart';
+import 'package:cbq/data/remote/response/status.dart';
 import 'package:cbq/providers/dashboard_provider.dart';
+import 'package:cbq/ui/widgets/custom_error_widget.dart';
+import 'package:cbq/ui/widgets/dashboard/dashboard_list.dart';
+import 'package:cbq/ui/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/register_provider.dart';
-import '../widgets/dashboard_list.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({Key? key}) : super(key: key);
@@ -19,8 +21,6 @@ class _DashboardPageState extends State<DashboardPage>
   late AnimationController _animationController;
 
   var _isInit = false;
-  var _isLoading = false;
-  var _isInternetConnectionExist = true;
 
   @override
   void initState() {
@@ -31,6 +31,7 @@ class _DashboardPageState extends State<DashboardPage>
       end: -.1,
     ).animate(
         CurvedAnimation(parent: _animationController, curve: Curves.elasticIn));
+
     super.initState();
   }
 
@@ -44,36 +45,11 @@ class _DashboardPageState extends State<DashboardPage>
   @override
   void didChangeDependencies() {
     if (!_isInit) {
-      _fetchData();
+      context.read<DashboardProvider>().fetchAndSetDashboardData();
       _runNotificationAnimation();
       _isInit = true;
     }
     super.didChangeDependencies();
-  }
-
-  Future<void> _fetchData() async {
-    try {
-      setState(() {
-        _isLoading = true;
-      });
-      await Provider.of<DashboardProvider>(context, listen: false)
-          .fetchAndSetDashboardData();
-      setState(() {
-        _isInternetConnectionExist = true;
-        _isLoading = false;
-      });
-    } on ConnectivityException catch (error) {
-      print("error dashboard $error");
-      setState(() {
-        _isLoading = false;
-        _isInternetConnectionExist = false;
-      });
-    } catch (error) {
-      print("error dashboard $error");
-      setState(() {
-        _isLoading = false;
-      });
-    }
   }
 
   @override
@@ -99,33 +75,23 @@ class _DashboardPageState extends State<DashboardPage>
               icon: const Icon(Icons.logout)),
         ],
       ),
-      body: _isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : _isInternetConnectionExist
-              ? const DashboardList()
-              : _noInternetConnectionWidget(),
+      body: Consumer<DashboardProvider>(
+        builder: (ctx, dashboardProvider, child) {
+          switch (dashboardProvider.apiResponse.status) {
+            case null:
+            case Status.LOADING:
+              return const LoadingWidget();
+            case Status.COMPLETED:
+              return DashboardList(dashboardProvider.apiResponse.data);
+            case Status.ERROR:
+              return CustomErrorWidget(dashboardProvider.apiResponse.message);
+          }
+        },
+      ),
     );
   }
 
   void _logout(BuildContext context) {
-    Provider.of<RegisterProvider>(context, listen: false).logout();
-  }
-
-  Widget _noInternetConnectionWidget() {
-    return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Text(
-            "No Internet connection,\n please check you internet connection!!",
-            textAlign: TextAlign.center,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: ElevatedButton(onPressed: _fetchData, child: const Text("Retry")),
-          )
-        ],
-      ),
-    );
+    context.read<RegisterProvider>().logout();
   }
 }

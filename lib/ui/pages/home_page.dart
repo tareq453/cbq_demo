@@ -1,3 +1,5 @@
+import 'package:cbq/res/AppContextExtension.dart';
+import 'package:cbq/ui/widgets/home/home_button.dart';
 import 'package:cbq/ui/widgets/slide_route.dart';
 import 'package:flutter/material.dart';
 
@@ -7,34 +9,13 @@ import 'register_page.dart';
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
-  Widget _homeButton(BuildContext context, IconData buttonIcon,
-      String buttonText, Function(BuildContext) clickHandler) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      child: OutlinedButton(
-          style: OutlinedButton.styleFrom(
-              fixedSize: const Size(90, 90),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12))),
-          onPressed: () => clickHandler(context),
-          child: Center(
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                Icon(
-                  buttonIcon,
-                  size: 35,
-                ),
-                Text(buttonText)
-              ]))),
-    );
-  }
-
   void _registerRoute(BuildContext context) {
+    print("_registerRoute");
     Navigator.of(context).push(SlideRoute(const RegisterPage()));
   }
 
   void _loginRoute(BuildContext context) {
+    print("_loginRoute");
     Navigator.of(context).push(SlideRoute(const LoginPage()));
   }
 
@@ -45,7 +26,7 @@ class HomePage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            "Welcome To Commercial Bank",
+            context.resources.strings.welcomeMessage,
             style: Theme.of(context).textTheme.titleMedium,
           ),
           const SizedBox(
@@ -58,12 +39,15 @@ class HomePage extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _homeButton(context, Icons.login, "Login", _loginRoute),
-              _homeButton(
-                context,
+              HomeButton(Icons.login, "Login", () {
+                _loginRoute(context);
+              }),
+              HomeButton(
                 Icons.app_registration,
                 "Register",
-                _registerRoute,
+                () {
+                  _registerRoute(context);
+                },
               )
             ],
           )

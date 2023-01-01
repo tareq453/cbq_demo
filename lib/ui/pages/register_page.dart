@@ -1,4 +1,4 @@
-import 'package:cbq/ui/widgets/register_form.dart';
+import 'package:cbq/ui/widgets/register/register_form.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/close_back_button.dart';
@@ -17,7 +17,6 @@ class RegisterPage extends StatelessWidget {
       ),
       body: Container(
         padding: const EdgeInsets.all(16),
-
         width: double.infinity,
         child: RegisterForm(),
       ),
