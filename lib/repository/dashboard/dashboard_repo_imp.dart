@@ -1,16 +1,13 @@
 import 'package:cbq/data/remote/network/api_end_points.dart';
 import 'package:cbq/data/remote/network/network_api_serivce.dart';
-import 'package:cbq/di/getit.dart';
 import 'package:cbq/models/dashboard_post.dart';
 import 'package:cbq/models/dashboard_user.dart';
 import 'package:cbq/repository/dashboard/dashboard_repo.dart';
 
 class DashboardRepoImp implements DashboardRepo {
-  late final NetworkApiService _networkApiService;
+  final NetworkApiService _networkApiService;
 
-  DashboardRepoImp() {
-    _networkApiService = getIt<NetworkApiService>();
-  }
+  DashboardRepoImp(this._networkApiService);
 
   @override
   Future<List<DashboardPost>> getDashboardPost() async {

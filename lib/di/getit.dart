@@ -11,10 +11,11 @@ GetIt getIt = GetIt.instance;
 
 void setupLocator() {
   getIt.registerLazySingleton(() => NetworkApiService());
-  getIt.registerLazySingleton(() => DashboardRepoImp());
+  getIt.registerLazySingleton(
+      () => DashboardRepoImp(getIt<NetworkApiService>()));
   getIt.registerLazySingleton(() => AppPref());
   getIt.registerFactory(() => CountryProvider());
-  getIt.registerFactory(() => DashboardProvider());
-  getIt.registerFactory(() => RegisterProvider());
-  getIt.registerFactory(() => PostDetailsProvider());
+  getIt.registerFactory(() => DashboardProvider(getIt<DashboardRepoImp>()));
+  getIt.registerFactory(() => RegisterProvider(getIt<AppPref>()));
+  getIt.registerFactory(() => PostDetailsProvider(getIt<DashboardRepoImp>()));
 }

@@ -1,12 +1,12 @@
 import 'package:cbq/data/remote/response/api_response.dart';
-import 'package:cbq/di/getit.dart';
 import 'package:cbq/models/post_details.dart';
 import 'package:cbq/repository/dashboard/dashboard_repo.dart';
-import 'package:cbq/repository/dashboard/dashboard_repo_imp.dart';
 import 'package:flutter/cupertino.dart';
 
 class PostDetailsProvider with ChangeNotifier {
-  final DashboardRepo _dashboardRepo = getIt<DashboardRepoImp>();
+  final DashboardRepo _dashboardRepo;
+
+  PostDetailsProvider(this._dashboardRepo);
   ApiResponse<PostDetails> _apiResponse = ApiResponse.loading();
 
   ApiResponse<PostDetails> get apiResponse {

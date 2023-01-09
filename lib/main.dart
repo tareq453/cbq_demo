@@ -29,6 +29,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    print("main rebuild");
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
@@ -44,40 +45,50 @@ class MyApp extends StatelessWidget {
           create: (ctx) => getIt<PostDetailsProvider>(),
         )
       ],
-      child: Consumer<RegisterProvider>(
-        builder: (ctx, register, _) {
-          return MaterialApp(
+      builder: (context, child) {
+        return MaterialApp(
+            debugShowCheckedModeBanner: false,
             title: 'CBQ',
             theme: ThemeData(
                 colorScheme: ColorScheme.fromSwatch()
                     .copyWith(primary: context.resources.color.colorPrimary),
                 textTheme: ThemeData.light().textTheme.copyWith(
                     titleMedium: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: context.resources.dimension.defaultText),
+                        fontWeight: FontWeight.bold,
+                        fontSize: context.resources.dimension.defaultText),
                     titleSmall: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: context.resources.dimension.smallText),
+                        fontWeight: FontWeight.bold,
+                        fontSize: context.resources.dimension.smallText),
                     headlineSmall: const TextStyle(
                       fontWeight: FontWeight.bold,
                     ))),
             home: FutureBuilder(
               builder: (ctx, snapshot) {
-                print("snapshot.data ${snapshot.data}");
+                print("main snapshot.data $snapshot");
                 return snapshot.connectionState == ConnectionState.waiting
                     ? const SplashScreen()
-                    : snapshot.data == true
-                        ? const DashboardPage()
-                        : const HomePage();
+                    : const HomeDestination();
               },
-              future: register.isRegistered(),
+              future: context.read<RegisterProvider>().checkRegistered(),
             ),
             routes: {
               LoginPage.route: (ctx) => const LoginPage(),
               RegisterPage.route: (ctx) => const RegisterPage(),
               PostDetail.route: (ctx) => const PostDetail(),
-            },
-          );
-        },
-      ),
+            });
+      },
     );
+  }
+}
+
+class HomeDestination extends StatelessWidget {
+  const HomeDestination({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    print("main HomeDestination");
+    final isRegistered = context.select<RegisterProvider, bool>(
+        (registerProvider) => registerProvider.isRegistered);
+    return isRegistered ? const DashboardPage() : const HomePage();
   }
 }

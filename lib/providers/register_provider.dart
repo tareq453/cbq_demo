@@ -1,17 +1,20 @@
-import 'dart:convert';
-
 import 'package:cbq/data/local/pref/app_pref.dart';
-import 'package:cbq/di/getit.dart';
 import 'package:cbq/models/user.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class RegisterProvider with ChangeNotifier {
   bool _isLoading = false;
-  final AppPref _appPref = getIt<AppPref>();
+  bool _isRegistered = false;
+  final AppPref _appPref;
+
+  RegisterProvider(this._appPref);
 
   bool get isLoading {
     return _isLoading;
+  }
+
+  bool get isRegistered {
+    return _isRegistered;
   }
 
   Future<void> register(User user) async {
@@ -23,21 +26,24 @@ class RegisterProvider with ChangeNotifier {
 
     await _appPref.setUserData(user);
     _isLoading = false;
+    _isRegistered = true;
     notifyListeners();
   }
 
-  Future<bool> isRegistered() async {
+  Future<void> checkRegistered() async {
     try {
+      print("checkRegistered");
       User? user = await _appPref.getUserData();
-      return user != null;
+      _isRegistered = user != null;
     } catch (error) {
       print("error $error");
-      return false;
+      _isRegistered = false;
     }
   }
 
   Future<void> logout() async {
     await _appPref.removeUserData();
+    _isRegistered = false;
     notifyListeners();
   }
 }

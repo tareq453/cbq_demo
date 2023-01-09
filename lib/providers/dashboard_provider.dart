@@ -1,5 +1,4 @@
 import 'package:cbq/data/remote/response/api_response.dart';
-import 'package:cbq/di/getit.dart';
 import 'package:cbq/models/dashboard_data.dart';
 import 'package:cbq/models/dashboard_post.dart';
 import 'package:cbq/models/dashboard_user.dart';
@@ -9,7 +8,10 @@ import 'package:flutter/material.dart';
 
 
 class DashboardProvider with ChangeNotifier {
-  final DashboardRepo _dashboardRepo = getIt<DashboardRepoImp>();
+  final DashboardRepo _dashboardRepo;
+
+  DashboardProvider(this._dashboardRepo);
+
   ApiResponse<List<DashboardData>> _apiResponse = ApiResponse.loading();
 
   ApiResponse<List<DashboardData>> get apiResponse {
@@ -22,9 +24,9 @@ class DashboardProvider with ChangeNotifier {
       // notifyListeners();
 
       final List<DashboardPost> loadedDashboardPost =
-          await _dashboardRepo.getDashboardPost();
+      await _dashboardRepo.getDashboardPost();
       final List<DashboardUser> loadedDashboardUser =
-          await _dashboardRepo.getDashboardUsers();
+      await _dashboardRepo.getDashboardUsers();
       final List<DashboardData> loadedDashboardData = [];
 
       for (var dashboardUser in loadedDashboardUser) {

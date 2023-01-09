@@ -72,14 +72,20 @@ class RegisterForm extends StatelessWidget {
               width: double.infinity,
               child: Text(
                 "ENTER DETAILS",
-                style: Theme.of(context).textTheme.titleSmall,
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .titleSmall,
               ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
               child: TextFormField(
                 decoration: InputDecoration(
-                    labelStyle: Theme.of(context).textTheme.bodyMedium,
+                    labelStyle: Theme
+                        .of(context)
+                        .textTheme
+                        .bodyMedium,
                     border: const OutlineInputBorder(),
                     labelText: 'Qatar ID/Passport Number *'),
                 validator: (value) {
@@ -99,27 +105,26 @@ class RegisterForm extends StatelessWidget {
             MobileNumberInput(_updateCountry, _updateMobileNumber),
             Padding(
               padding: const EdgeInsets.only(bottom: 16),
-              child: Consumer<RegisterProvider>(
-                builder: (ctx, registerProvider, child) {
-                  return registerProvider.isLoading
-                      ? const CircularProgressIndicator()
-                      : ElevatedButton(
-                          style: ButtonStyle(
-                              shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(18.0)))),
-                          onPressed: () {
-                            _submitForm(context);
-                          },
-                          child: const Text("Submit"));
-                },
-              ),
-            )
+              child: context.select<RegisterProvider, bool>((
+                  registerProvider) => registerProvider.isLoading) ?
+              const CircularProgressIndicator()
+                  : ElevatedButton(
+                  style: ButtonStyle(
+                      shape: MaterialStateProperty.all<
+                          RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius:
+                              BorderRadius.circular(18.0)))),
+                  onPressed: () {
+                    _submitForm(context);
+                  },
+                  child: const Text("Submit")),
+            ),
           ],
-        ),
-      ),
+        )
+        ,
+      )
+      ,
     );
   }
 }
