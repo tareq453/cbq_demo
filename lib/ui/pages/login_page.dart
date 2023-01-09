@@ -1,6 +1,8 @@
+import 'package:cbq/res/AppContextExtension.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/close_back_button.dart';
+
 class LoginPage extends StatelessWidget {
   static const String route = "/login_page";
 
@@ -11,7 +13,12 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: const CloseBackButton(),
-        title: const Text("Login Using Password"),
+        title: FittedBox(
+          child: Text(
+            context.appLocalizations.login_using_password,
+            softWrap: true,
+          ),
+        ),
       ),
     );
   }

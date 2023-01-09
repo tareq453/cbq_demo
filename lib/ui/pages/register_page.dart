@@ -1,3 +1,4 @@
+import 'package:cbq/res/AppContextExtension.dart';
 import 'package:cbq/ui/widgets/register/register_form.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +14,7 @@ class RegisterPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: const CloseBackButton(),
-        title: const Text("New Register"),
+        title: Text(context.appLocalizations.new_register),
       ),
       body: Container(
         padding: const EdgeInsets.all(16),

@@ -26,25 +26,25 @@ class HomePage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            context.resources.strings.welcomeMessage,
+            context.appLocalizations.welcome,
             style: Theme.of(context).textTheme.titleMedium,
           ),
           const SizedBox(
             height: 16,
           ),
-          const Text("Mobile App"),
+          Text(context.appLocalizations.mobile_app),
           const SizedBox(
             height: 16,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              HomeButton(Icons.login, "Login", () {
+              HomeButton(Icons.login, context.appLocalizations.login, () {
                 _loginRoute(context);
               }),
               HomeButton(
                 Icons.app_registration,
-                "Register",
+                context.appLocalizations.register,
                 () {
                   _registerRoute(context);
                 },

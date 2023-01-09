@@ -4,6 +4,7 @@ import 'package:cbq/res/AppContextExtension.dart';
 import 'package:cbq/ui/pages/post_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 import 'providers/country_provider.dart';
@@ -45,8 +46,10 @@ class MyApp extends StatelessWidget {
           create: (ctx) => getIt<PostDetailsProvider>(),
         )
       ],
-      builder: (context, child) {
+      builder: (ctx, child) {
         return MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
             debugShowCheckedModeBanner: false,
             title: 'CBQ',
             theme: ThemeData(
@@ -69,7 +72,7 @@ class MyApp extends StatelessWidget {
                     ? const SplashScreen()
                     : const HomeDestination();
               },
-              future: context.read<RegisterProvider>().checkRegistered(),
+              future: ctx.read<RegisterProvider>().checkRegistered(),
             ),
             routes: {
               LoginPage.route: (ctx) => const LoginPage(),

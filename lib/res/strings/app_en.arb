@@ -1,0 +1,9 @@
+{
+    "welcome": "Welcome To Commercial Bank",
+    "login": "Login",
+    "register" : "Register",
+    "mobile_app" : "Mobile App",
+    "dashboard" : "Dashboard",
+    "login_using_password" : "Login Using Password",
+    "new_register" : "New Register"
+}
