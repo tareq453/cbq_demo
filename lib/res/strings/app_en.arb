@@ -5,5 +5,10 @@
     "mobile_app" : "Mobile App",
     "dashboard" : "Dashboard",
     "login_using_password" : "Login Using Password",
-    "new_register" : "New Register"
+    "new_register" : "New Register",
+    "accounts" : "Accounts",
+    "transfers" : "Transfers",
+    "payments" : "Payments",
+    "rewards" : "Rewards",
+    "services" : "Services"
 }

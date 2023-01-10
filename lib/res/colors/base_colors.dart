@@ -12,4 +12,6 @@ abstract class BaseColors{
   //extra color
   Color get colorWhite;
   Color get colorBlack;
+
+  Color get transparent;
 }

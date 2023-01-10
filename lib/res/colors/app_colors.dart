@@ -38,6 +38,9 @@ class AppColors implements BaseColors{
   @override
   Color get colorBlack => const Color(0xff000000);
 
+  @override
+  Color get transparent => Colors.transparent;
+
 
 
 }

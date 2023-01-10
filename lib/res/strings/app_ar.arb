@@ -5,5 +5,10 @@
     "mobile_app" : "تطبيق الهاتف الجوال",
     "dashboard" : "القائمة الريسية",
     "login_using_password" : "تسجيل الدخول باستخدام كلمة المرور",
-    "new_register" : "تسجيل جديد"
+    "new_register" : "تسجيل جديد",
+    "accounts" : "حساباتي",
+    "transfers" : "التحويلات",
+    "payments" : "المدفوعات",
+    "rewards" : "المكافآت",
+    "services" : "الخدمات"
 }
