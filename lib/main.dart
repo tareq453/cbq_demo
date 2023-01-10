@@ -1,6 +1,8 @@
 import 'package:cbq/di/getit.dart';
+import 'package:cbq/providers/navigation_provider.dart';
 import 'package:cbq/providers/post_details_provider.dart';
 import 'package:cbq/res/AppContextExtension.dart';
+import 'package:cbq/ui/pages/main_navigation_page.dart';
 import 'package:cbq/ui/pages/post_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,7 +12,6 @@ import 'package:provider/provider.dart';
 import 'providers/country_provider.dart';
 import 'providers/dashboard_provider.dart';
 import 'providers/register_provider.dart';
-import 'ui/pages/dashboard_page.dart';
 import 'ui/pages/home_page.dart';
 import 'ui/pages/login_page.dart';
 import 'ui/pages/register_page.dart';
@@ -44,6 +45,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (ctx) => getIt<PostDetailsProvider>(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => getIt<NavigationProvider>(),
         )
       ],
       builder: (ctx, child) {
@@ -92,6 +96,6 @@ class HomeDestination extends StatelessWidget {
     print("main HomeDestination");
     final isRegistered = context.select<RegisterProvider, bool>(
         (registerProvider) => registerProvider.isRegistered);
-    return isRegistered ? const DashboardPage() : const HomePage();
+    return isRegistered ?  MainNavigationPage() : const HomePage();
   }
 }

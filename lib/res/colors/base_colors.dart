@@ -5,6 +5,9 @@ abstract class BaseColors{
   MaterialColor get colorPrimary;
   MaterialColor get colorSecondary;
 
+  Color get primary;
+  Color get primaryDark;
+  Color get primaryLight;
   //text color
   Color get colorPrimaryText;
   Color get colorSecondaryText;

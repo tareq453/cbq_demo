@@ -8,13 +8,14 @@ class CBQBottomNavigationBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        gradient: RadialGradient(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          stops: const [0.2, 0.8],
           colors: [
-            context.resources.color.colorPrimary.shade900,
-            context.resources.color.colorPrimary.shade800,
-            context.resources.color.colorPrimary.shade700
+            context.resources.color.primary,
+            context.resources.color.primaryDark,
           ],
-          tileMode: TileMode.clamp,
         ),
         borderRadius: const BorderRadius.only(
             topRight: Radius.circular(15), topLeft: Radius.circular(15)),
