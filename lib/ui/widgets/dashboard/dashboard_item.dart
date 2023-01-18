@@ -1,3 +1,4 @@
+import 'package:cbq/res/AppContextExtension.dart';
 import 'package:cbq/ui/pages/post_detail.dart';
 import 'package:flutter/material.dart';
 
@@ -39,6 +40,7 @@ class _DashboardItemState extends State<DashboardItem>
   @override
   Widget build(BuildContext context) {
     return Card(
+      clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(18),
           side: const BorderSide(color: Colors.grey)),

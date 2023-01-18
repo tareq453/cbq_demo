@@ -1,11 +1,14 @@
 import 'package:cbq/data/local/pref/app_pref.dart';
+import 'package:cbq/models/country.dart';
 import 'package:cbq/models/user.dart';
+import 'package:cbq/res/images/app_images.dart';
 import 'package:flutter/material.dart';
 
 class RegisterProvider with ChangeNotifier {
   bool _isLoading = false;
   bool _isRegistered = false;
   final AppPref _appPref;
+  String _selectedCountryImage = AppImages.qatarFlag;
 
   RegisterProvider(this._appPref);
 
@@ -15,6 +18,10 @@ class RegisterProvider with ChangeNotifier {
 
   bool get isRegistered {
     return _isRegistered;
+  }
+
+  String get selectedCountryImage {
+    return _selectedCountryImage;
   }
 
   Future<void> register(User user) async {
@@ -45,5 +52,9 @@ class RegisterProvider with ChangeNotifier {
     await _appPref.removeUserData();
     _isRegistered = false;
     notifyListeners();
+  }
+
+  void updateCountry(Country country) {
+    _selectedCountryImage = country.image;
   }
 }

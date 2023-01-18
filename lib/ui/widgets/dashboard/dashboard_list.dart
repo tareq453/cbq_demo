@@ -11,23 +11,16 @@ class DashboardList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.only(top: 4),
-      decoration: BoxDecoration(
-          borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(15), topRight: Radius.circular(15)),
-          color: context.resources.color.colorWhite),
-      child: ListView.builder(
-        physics: const BouncingScrollPhysics(
-            parent: AlwaysScrollableScrollPhysics()),
-        itemBuilder: (context, index) {
-          return DashboardItem(
-            _dashboardList?[index],
-            key: ValueKey(_dashboardList?[index].dashboardUser?.id),
-          );
-        },
-        itemCount: _dashboardList?.length ?? 0,
-      ),
+    return ListView.builder(
+      physics:
+          const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+      itemBuilder: (context, index) {
+        return DashboardItem(
+          _dashboardList?[index],
+          key: ValueKey(_dashboardList?[index].dashboardUser?.id),
+        );
+      },
+      itemCount: _dashboardList?.length ?? 0,
     );
   }
 }

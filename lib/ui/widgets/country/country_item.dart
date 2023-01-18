@@ -9,6 +9,7 @@ class CountryItem extends StatelessWidget {
   const CountryItem(this._selectHandler,this._country, {Key? key}) : super(key: key);
 
   void _selectCountry(BuildContext context) {
+    print("_selectCountry _country ${_country.toJson()}");
     _selectHandler(_country);
     Navigator.of(context).pop();
   }

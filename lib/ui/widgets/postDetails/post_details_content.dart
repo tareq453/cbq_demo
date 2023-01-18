@@ -19,7 +19,7 @@ class PostDetailsContext extends StatelessWidget {
           padding: const EdgeInsets.only(left: 32, top: 18),
           child: Text(
             "User Post Details",
-            style: Theme.of(context).textTheme.titleMedium,
+            style: Theme.of(context).textTheme.titleLarge,
           ),
         ),
         _postDetailsWidget(

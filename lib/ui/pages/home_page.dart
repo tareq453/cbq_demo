@@ -32,7 +32,7 @@ class HomePage extends StatelessWidget {
           children: [
             Text(
               context.appLocalizations.welcome,
-              style: Theme.of(context).textTheme.titleMedium,
+              style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(
               height: 16,

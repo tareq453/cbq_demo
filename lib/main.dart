@@ -60,6 +60,7 @@ class MyApp extends StatelessWidget {
                 colorScheme: ColorScheme.fromSwatch()
                     .copyWith(primary: context.resources.color.colorPrimary),
                 textTheme: ThemeData.light().textTheme.copyWith(
+                    titleLarge: const TextStyle(fontWeight: FontWeight.bold),
                     titleMedium: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: context.resources.dimension.defaultText),
@@ -96,6 +97,6 @@ class HomeDestination extends StatelessWidget {
     print("main HomeDestination");
     final isRegistered = context.select<RegisterProvider, bool>(
         (registerProvider) => registerProvider.isRegistered);
-    return isRegistered ?  MainNavigationPage() : const HomePage();
+    return isRegistered ? MainNavigationPage() : const HomePage();
   }
 }

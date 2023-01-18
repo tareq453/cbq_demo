@@ -28,6 +28,20 @@ class AppPref {
     }
   }
 
+  Future<String?> getUserImage() async {
+    final prefs = await SharedPreferences.getInstance();
+    print("USER_DATA_KEY ${prefs.containsKey(USER_DATA_KEY)}");
+    if (prefs.containsKey(USER_DATA_KEY)) {
+      print("data is ${prefs.get(USER_DATA_KEY)}");
+      User? user =
+      User.fromJson(json.decode(prefs.getString(USER_DATA_KEY) ?? ""));
+      print("user ${user.toString()}");
+      return user.country?.image;
+    } else {
+      return null;
+    }
+  }
+
   Future<void> removeUserData() async {
     final prefs = await SharedPreferences.getInstance();
     prefs.remove(USER_DATA_KEY);

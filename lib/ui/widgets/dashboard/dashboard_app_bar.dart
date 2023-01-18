@@ -1,5 +1,7 @@
+import 'package:cbq/providers/dashboard_provider.dart';
 import 'package:cbq/providers/register_provider.dart';
 import 'package:cbq/res/AppContextExtension.dart';
+import 'package:cbq/res/images/app_images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -78,28 +80,46 @@ class _DashboardAppBarState extends State<DashboardAppBar>
         ),
       )),
       elevation: 0,
-      title: Container(
-        child: Row(children: [
-          ClipOval(
-            child: Image.asset(
-              "assets/images/flags/flag-qatar.jpg",
-              fit: BoxFit.fill,
-              width: 35,
-              height: 35,
-            ),
+      title: Row(children: [
+        ClipOval(
+          child: FutureBuilder(
+            builder: (ctx, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else {
+                print("profile image string ${snapshot.data}");
+                return Image.asset(
+                  snapshot.data ?? AppImages.qatarFlag,
+                  fit: BoxFit.fill,
+                  width: 35,
+                  height: 35,
+                );
+              }
+            },
+            future: context.read<DashboardProvider>().getUserImage(),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                FittedBox(child: Text('welcome')),
-                FittedBox(child: Text('Mr. Tareq Alassah'))
-              ],
-            ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              FittedBox(
+                  child: Text(
+                'welcome',
+                style: context.theme.textTheme.titleMedium
+                    ?.copyWith(color: context.resources.color.colorWhite),
+              )),
+              FittedBox(
+                  child: Text('Mr. Tareq Alassah',
+                      style: context.theme.textTheme.subtitle2?.copyWith(
+                          color: context.resources.color.colorWhite)))
+            ],
           ),
-        ]),
-      ),
+        ),
+      ]),
       backgroundColor: Colors.transparent,
       actions: [
         RotationTransition(

@@ -32,7 +32,7 @@ class CountryPickerModal extends StatelessWidget {
               "SELECT PHONE CODE",
               style: Theme.of(context)
                   .textTheme
-                  .titleMedium
+                  .titleLarge
                   ?.copyWith(color: Theme.of(context).colorScheme.primary),
             ),
           ),

@@ -15,22 +15,28 @@ class DashboardPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read<DashboardProvider>().fetchAndSetDashboardData();
-    return Scaffold(
-        body: Container(
+    return Container(
       color: context.resources.color.primaryDark,
-      child: Selector<DashboardProvider, ApiResponse<List<DashboardData>>>(
-          builder: (context, apiResponse, child) {
-            switch (apiResponse.status) {
-              case null:
-              case Status.LOADING:
-                return const LoadingWidget();
-              case Status.COMPLETED:
-                return DashboardList(apiResponse.data);
-              case Status.ERROR:
-                return CustomErrorWidget(apiResponse.message);
-            }
-          },
-          selector: (_, dashboardProvider) => dashboardProvider.apiResponse),
-    ));
+      child: Container(
+        padding: const EdgeInsets.only(top: 4),
+        decoration: BoxDecoration(
+            borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(15), topRight: Radius.circular(15)),
+            color: context.resources.color.colorWhite),
+        child: Selector<DashboardProvider, ApiResponse<List<DashboardData>>>(
+            builder: (context, apiResponse, child) {
+              switch (apiResponse.status) {
+                case null:
+                case Status.LOADING:
+                  return const LoadingWidget();
+                case Status.COMPLETED:
+                  return DashboardList(apiResponse.data);
+                case Status.ERROR:
+                  return CustomErrorWidget(apiResponse.message);
+              }
+            },
+            selector: (_, dashboardProvider) => dashboardProvider.apiResponse),
+      ),
+    );
   }
 }

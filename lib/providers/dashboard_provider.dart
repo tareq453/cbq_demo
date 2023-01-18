@@ -1,3 +1,4 @@
+import 'package:cbq/data/local/pref/app_pref.dart';
 import 'package:cbq/data/remote/response/api_response.dart';
 import 'package:cbq/models/dashboard_data.dart';
 import 'package:cbq/models/dashboard_post.dart';
@@ -9,8 +10,9 @@ import 'package:flutter/material.dart';
 
 class DashboardProvider with ChangeNotifier {
   final DashboardRepo _dashboardRepo;
+  final AppPref _appPref;
 
-  DashboardProvider(this._dashboardRepo);
+  DashboardProvider(this._dashboardRepo,this._appPref);
 
   ApiResponse<List<DashboardData>> _apiResponse = ApiResponse.loading();
 
@@ -45,5 +47,10 @@ class DashboardProvider with ChangeNotifier {
       notifyListeners();
     }
     return true;
+  }
+
+
+  Future<String?> getUserImage() async{
+    return _appPref.getUserImage();
   }
 }

@@ -16,7 +16,7 @@ void setupLocator() {
       () => DashboardRepoImp(getIt<NetworkApiService>()));
   getIt.registerLazySingleton(() => AppPref());
   getIt.registerFactory(() => CountryProvider());
-  getIt.registerFactory(() => DashboardProvider(getIt<DashboardRepoImp>()));
+  getIt.registerFactory(() => DashboardProvider(getIt<DashboardRepoImp>(),getIt<AppPref>()));
   getIt.registerFactory(() => RegisterProvider(getIt<AppPref>()));
   getIt.registerFactory(() => PostDetailsProvider(getIt<DashboardRepoImp>()));
   getIt.registerFactory(() => NavigationProvider());

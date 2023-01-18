@@ -1,3 +1,4 @@
+import 'package:cbq/providers/register_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -70,9 +71,10 @@ class _MobileNumberInputState extends State<MobileNumberInput> {
   }
 
   void _selectCountry(Country country) {
+    print("_selectCountry 2 country ${country.toJson()}");
     setState(() {
-      widget._countryHandler(_selectedCountry);
       _selectedCountry = country;
+      widget._countryHandler(_selectedCountry);
     });
   }
 
